@@ -1,0 +1,54 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Route::get('/', ['as' => 'raiz', 'uses' => 'Admin\HomeController@raiz']);
+Route::get('/home', ['as' => 'home', 'uses' => 'Admin\HomeController@raiz']);
+
+Route::middleware('access.controll.administrador')->group(function () {
+   
+
+
+
+
+
+
+    //=============User-Start=====================//
+    Route::get('admin/users/listar', ['as' => 'admin.users', 'uses' => 'Admin\UserController@index'])->middleware('access.controll.administrador');
+    Route::get('admin/users/listar/imprimir', ['as' => 'admin.users.listar.imprimir', 'uses' => 'Admin\UserController@imprimir_lista'])->middleware('access.controll.administrador');
+    Route::post('admin/users/salvar', ['as' => 'admin.users.salvar', 'uses' => 'Admin\UserController@salvar'])->middleware('access.controll.administrador');
+    Route::get('admin/users/cadastrar', ['as' => 'admin.users.cadastrar', 'uses' => 'Admin\UserController@create'])->middleware('access.controll.administrador');
+    Route::get('admin/users/excluir/{id}', ['as' => 'admin.users.excluir', 'uses' => 'Admin\UserController@excluir'])->middleware('access.controll.administrador');
+    Route::put('admin/users/atualizar/{id}', ['as' => 'admin.users.atualizar', 'uses' => 'Admin\UserController@atualizar'])->middleware('access.controll.administrador');
+    Route::get('admin/users/ver/{id}', ['as' => 'users', 'uses' => 'Admin\UserController@ver'])->middleware('access.controll.administrador');
+    Route::get('admin/users/editar/{id}', ['as' => 'admin.users.editar', 'uses' => 'Admin\UserController@editar'])->middleware('access.controll.administrador');
+    //=============User-End======================//
+
+
+    //=============transacao-Start=====================//
+    Route::get('admin/transacoes/listar', ['as' => 'admin.transacoes', 'uses' => 'Admin\TransacaoController@index'])->middleware('access.controll.administrador');
+    Route::get('admin/transacoes/listar/imprimir', ['as' => 'admin.transacoes.listar.imprimir', 'uses' => 'Admin\TransacaoController@imprimir_lista'])->middleware('access.controll.administrador');
+    Route::post('admin/transacoes/salvar', ['as' => 'admin.transacoes.salvar', 'uses' => 'Admin\TransacaoController@salvar'])->middleware('access.controll.administrador');
+    Route::get('admin/transacoes/cadastrar', ['as' => 'admin.transacoes.cadastrar', 'uses' => 'Admin\TransacaoController@create'])->middleware('access.controll.administrador');
+    Route::get('admin/transacoes/excluir/{id}', ['as' => 'admin.transacoes.excluir', 'uses' => 'Admin\TransacaoController@excluir'])->middleware('access.controll.administrador');
+    Route::put('admin/transacoes/atualizar/{id}', ['as' => 'admin.transacoes.atualizar', 'uses' => 'Admin\TransacaoController@atualizar'])->middleware('access.controll.administrador');
+    
+    Route::get('admin/transacoes/editar/{id}', ['as' => 'admin.transacoes.editar', 'uses' => 'Admin\TransacaoController@editar'])->middleware('access.controll.administrador');
+    //=============transacoes-End======================//
+
+
+
+});

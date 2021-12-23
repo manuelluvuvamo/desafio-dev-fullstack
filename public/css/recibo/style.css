@@ -1,0 +1,38 @@
+* {
+  font-family: "Times New Roman", Times, serif;
+  color: rgb(0, 0, 0);
+
+}
+#ficha{
+font-size: 12px;
+}
+table{
+  font-size: 12px;
+}
+.nome_escola{
+  
+   text-align: right; 
+   font-size: 14px;
+
+}
+.aviso{
+   text-align: center;
+}
+.inscricaoN{
+    text-align: center;
+    font-size: 18px;
+}
+.funcionario{
+    text-align: center;
+    font-size: 18px;
+}
+.logo{
+ position: absolute;
+  margin-top: -50px;
+  float: left;
+  z-index: 1;
+}
+
+.corte{
+    margin-bottom: 50px;
+}

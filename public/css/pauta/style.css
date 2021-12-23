@@ -1,0 +1,56 @@
+ .logotipo {
+     position: absolute;
+     margin-top: -60px;
+     margin-right: -110px;
+     float: left;
+     z-index: 1;
+ }
+
+ * {
+     font-family: "Arial" !important;
+ }
+
+ .tema {
+     font-weight: bold;
+     font-size: 20px;
+     text-align: center;
+ }
+
+ .director {
+     font-weight: bold;
+     font-size: 10px;
+     margin-top: 50px;
+ }
+
+
+
+ table, tr, td, th {
+     border: 1px solid #000;
+     font-size: 13px;
+     font-family: 'Times New Roman', Times, serif;
+     text-align: center;
+ }
+
+
+ table td {
+     padding:5px;
+ }
+
+ table th {
+     padding: 8px;
+ }
+
+
+
+ .color-red {
+     color: #ff0000;
+ }
+
+ .color-blue {
+     color: #1c1cf0;
+ }
+
+ .Maiusculas{
+   
+     text-transform: uppercase;
+ }

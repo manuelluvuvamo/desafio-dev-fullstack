@@ -1,0 +1,53 @@
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+/* 
+    Created on : 20/12/2020
+    Author     : Maria Teresa Andŕe Mbuta
+*/
+
+body {
+  font-family: 'Arial';
+  color: #00174d;
+  font-size: 10px;
+  font-weight: bold;
+  
+}
+
+.foto {
+  margin-left: 53px;
+  margin-bottom: -25px;
+  margin-top: 139px;
+}
+
+.nome {
+  margin-left: 37px;
+  margin-bottom: -1px;
+  margin-top: 19%;
+}
+
+.funcao {
+  margin-left: 45px;
+  margin-bottom: -2px;
+}
+
+.bi {
+  margin-left: 33px;
+  margin-bottom: -5px;
+}
+
+.director {
+  padding-top: 16%;
+  margin-left: 53px;
+}
+
+.nomeDirector {
+  margin-left: 15%;
+  margin-top: -1%;
+  padding-top: 2%;
+  margin-left: -5px;
+}

@@ -1,0 +1,77 @@
+table{
+    border-collapse: collapse;  
+   
+}
+
+table,th,td{
+   
+    border: 1px solid black;
+    
+}
+
+img{
+    height: 100px;
+    margin-top: -50px;
+   
+}
+caption{
+  
+    height: 100px;
+}
+
+
+#cabecalho{
+
+    text-align: center;
+}
+
+#vc_ministerio{
+    margin-top:-50px;
+}
+#declaracao{
+    text-align: center; margin-top:2%;
+}
+
+#referencia{
+    text-align: justify;
+    margin-left: 58.5%
+}
+
+#n_ref{
+    margin-left:80px; 
+}
+
+#texto{
+    text-align: center;
+    text-align: justify;  margin-top:4px;
+}
+
+#table{
+    margin:auto;   width:500px;
+}
+
+td{
+    text-align: center; 
+}
+
+tr{
+
+    margin-left:100px;
+}
+
+#div_dep_table{
+    text-align: center; margin-top:15px;
+}
+
+#data{
+
+    text-align: center; margin-top:15px;
+}
+
+#mestre{
+    float: left; margin-left:0%; margin-top:5%;
+}
+
+#directora{
+    float: right;   margin-top:-135px; margin-left:480px;
+}

@@ -1,0 +1,10 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.table-buttons{
+    text-align: right;
+}
+.table-buttons form {
+    display: contents;
+}

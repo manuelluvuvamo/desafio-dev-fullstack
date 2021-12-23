@@ -1,0 +1,25 @@
+ @if (Auth::user()->vc_tipoUtilizador == 'Administrador' || Auth::user()->vc_tipoUtilizador == 'Director Geral')
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-calendar-alt"></i>
+                                        <p>
+                                            Anos Lectivo
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ url('/admin/anolectivo/cadastrar') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Cadastrar</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/admin/anolectivo') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Listar</p>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
