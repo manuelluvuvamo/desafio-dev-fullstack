@@ -50,5 +50,16 @@ Route::middleware('access.controll.administrador')->group(function () {
     //=============transacoes-End======================//
 
 
+    //=============transacao-Start=====================//
+    Route::get('admin/lojas/listar', ['as' => 'admin.lojas', 'uses' => 'Admin\LojaController@index'])->middleware('access.controll.administrador');
+    Route::get('admin/lojas/listar/imprimir', ['as' => 'admin.lojas.listar.imprimir', 'uses' => 'Admin\LojaController@imprimir_lista'])->middleware('access.controll.administrador');
+    Route::post('admin/lojas/salvar', ['as' => 'admin.lojas.salvar', 'uses' => 'Admin\LojaController@salvar'])->middleware('access.controll.administrador');
+    Route::get('admin/lojas/cadastrar', ['as' => 'admin.lojas.cadastrar', 'uses' => 'Admin\LojaController@create'])->middleware('access.controll.administrador');
+    Route::get('admin/lojas/excluir/{id}', ['as' => 'admin.lojas.excluir', 'uses' => 'Admin\LojaController@excluir'])->middleware('access.controll.administrador');
+    Route::put('admin/lojas/atualizar/{id}', ['as' => 'admin.lojas.atualizar', 'uses' => 'Admin\LojaController@atualizar'])->middleware('access.controll.administrador');
+    
+    Route::get('admin/lojas/editar/{id}', ['as' => 'admin.lojas.editar', 'uses' => 'Admin\LojaController@editar'])->middleware('access.controll.administrador');
+    //=============lojas-End======================//
+
 
 });

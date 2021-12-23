@@ -66,8 +66,8 @@ class TransacaoController extends Controller
 
     public function salvar(Request $request)
     {
-        try {
-            
+       /*  try {
+             */
             $extension = strtolower( $request->file->getClientOriginalExtension());
 
             if($extension == "xlsx"){
@@ -84,10 +84,10 @@ class TransacaoController extends Controller
             }else{
                 return redirect()->back()->with('aviso', '2');  
             }
-           
+      /*      
         } catch (\Exception $exception) {
             return redirect()->back()->with('aviso', '1');
-        }
+        } */
     }
     public function editar($id)
     {
