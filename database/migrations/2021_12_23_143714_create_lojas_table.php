@@ -18,8 +18,8 @@ class CreateLojasTable extends Migration
             $table->string("nome_loja");
             $table->string("bi_dono");
             $table->string("nome_dono");
-            $table->float("saldo")->default(0.00);
-            $table->float("value")->default(0.00);
+            $table->double("saldo")->default(0);
+        
             $table->timestamps();
         });
     }

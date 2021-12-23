@@ -5,25 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transacao;
-use Illuminate\Validation\Rules;
-use App\Repositories\Eloquent\UtilizadorRepository;
-use Illuminate\Support\Facades\Validator;
-use App\Actions\Fortify\PasswordValidationRules;
+use App\Models\Loja;
 use App\Imports\TransacaoImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Logger;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Cabecalho;
 use Illuminate\Support\Facades\Auth;
 
 class TransacaoController extends Controller
 {
-    use PasswordValidationRules;
+    
     private $Logger;
     protected $user;
-    public function __construct(UtilizadorRepository $user)
+    public function __construct()
     {
-        $this->user = $user;
+
         $this->Logger = new Logger();
     }
 
@@ -39,24 +37,18 @@ class TransacaoController extends Controller
     {
         $this->loggerData("Listou as transações");
 
-        $transacoes = Transacao::where([['it_estado', 1]])->get();
+        // $transacoes = Transacao::where([['it_estado', 1]])->get();
+        $transacoes  = DB::table('transacaos')
+        ->join('lojas', 'transacaos.id_loja', '=', 'lojas.id')
+        ->select(
+            'transacaos.*',
+            'lojas.nome_loja as nome_loja',
+            'lojas.bi_dono as bi',
+            'lojas.nome_dono as nome_dono',
+        )->orderBy('transacaos.id')->get();
         return view('admin.transacoes.index', compact('transacoes'));
     }
-    public function imprimir_lista()
-    {
-        $data['cabecalho'] = Cabecalho::find(1);
-        $data["bootstrap"] = file_get_contents("css/listas/bootstrap.min.css");
-        $data["css"] = file_get_contents("css/listas/style.css");
-
-        $mpdf = new \Mpdf\Mpdf();
-
-        $mpdf->SetFont("arial");
-        $mpdf->setHeader();
-        $this->loggerData("Imprimiu Lita de Utilizador");
-        $html = view("admin/pdfs/listas/funcionario/index", $data);
-        $mpdf->writeHTML($html);
-        $mpdf->Output("listasdFuncionarios.pdf", "I");
-    }
+   
 
 
     public function create()
@@ -66,10 +58,10 @@ class TransacaoController extends Controller
 
     public function salvar(Request $request)
     {
-       /*  try {
-             */
+         try {
+             
             $extension = strtolower( $request->file->getClientOriginalExtension());
-
+           
             if($extension == "xlsx"){
 
                 $importado = Excel::import(new TransacaoImport, $request->file);
@@ -81,21 +73,239 @@ class TransacaoController extends Controller
                 }else{
                     return redirect()->back()->with('aviso', '1');  
                 }
+            }elseif($extension == "csv" || $extension == "txt"){
+
+                $arquivo_tmp = $request->file;
+                $sucesso = true;
+                //ler todo o arquivo para um array
+                $dados = file($arquivo_tmp);
+               // dd( $dados);
+
+                foreach($dados as $linha){
+                    $linha = trim($linha);
+                    $row = explode(';', $linha);
+                   
+                    
+                    $tipo = $row[0];
+                    $data = $row[1];
+                    $valor = $row[2];
+                    $bi = $row[3];
+                    $cartao = $row[4];
+                    $hora = $row[5];
+                    $dono_loja = $row[6];
+                    $nome_loja = $row[7];
+
+
+
+
+                    $loja = Loja::where([["bi_dono",$row[3]]])->where([["nome_loja",$row[7]]])->get()->first();
+
+     
+                    if(isset($loja->id)){
+                        //dd($loja->id);
+            
+                        switch ( $row[0]) {
+                            case 1:
+                           
+                                $saldo = ($loja->saldo +  $row[2]);
+                         
+                                break;
+                            case 2:
+                                $saldo = ($loja->saldo -  $row[2]);
+                                break;
+            
+                            case 3:
+                                 $saldo = ($loja->saldo -  $row[2]);
+                                 break;
+                                
+                             case 4:
+                                $saldo = ($loja->saldo +  $row[2]);
+                                break;
+            
+                            case 5:
+                                $saldo = ($loja->saldo +  $row[2]);
+                                break;
+                            
+                            case 6:
+                                $saldo = ($loja->saldo +  $row[2]);
+                                break;
+            
+                            case 7:
+                                 $saldo = ($loja->saldo +  $row[2]);
+                                break;
+                            case 8:
+                                $saldo = ($loja->saldo +  $row[2]);
+                                break;
+                            case 9:
+                                $saldo = ($loja->saldo -  $row[2]);
+                                break;
+                                
+                                
+                            default:
+                                # code...
+                                break;
+                        }
+                            
+                            $loj = Loja::find($loja->id)->update([
+            
+                                "saldo"=>  $saldo,
+            
+            
+                            ]);
+            
+                           
+                            if ($loj) {
+                              $transa = Transacao::create([
+                                    //
+                                    
+                                    'tipo'=>$row[0],
+                                    'data'=>date('Y-m-d', strtotime($row[1] )),
+                                    'valor'=>doubleval( $row[2]),
+                                    'id_loja'=>$loja->id,
+                                    'cartao'=>intval($row[4]),
+                                    'hora'=>$row[5],
+                                    
+                                  
+                                ]);
+
+                                if($transa){
+                                    $sucesso = true;
+                                }else{
+                                   $sucesso=false;  
+                                }
+                            }
+            
+                        
+                       
+            
+                    }else{
+            
+                        $loja = Loja::create([
+            
+                            'nome_loja' => $row[7],
+                            'nome_dono' => $row[6],
+                            'bi_dono' => $row[3],
+                            'saldo'=>0,
+                            
+                        ]);
+            
+                       
+    
+            
+                        if ($loja) {
+                            switch ( $row[0]) {
+                                case 1:
+                                    $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                                case 2:
+                                    $saldo = ($loja->saldo -  $row[2]);
+                                    break;
+                
+                                case 3:
+                                     $saldo = ($loja->saldo -  $row[2]);
+                                     break;
+                                    
+                                 case 4:
+                                    $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                
+                                case 5:
+                                    $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                                
+                                case 6:
+                                    $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                
+                                case 7:
+                                     $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                                case 8:
+                                    $saldo = ($loja->saldo +  $row[2]);
+                                    break;
+                                case 9:
+                                    $saldo = ($loja->saldo -  $row[2]);
+                                    break;
+                                    
+                                    
+                                default:
+                                    # code...
+                                    break;
+                            }
+                                $loj = Loja::find($loja->id)->update([
+                
+                                    "saldo" =>$saldo,
+                
+                
+                                ]);
+                
+                            
+                                if ($loj) {
+                                  
+                                        //
+                                        
+                                        $transa = Transacao::create([
+                                            //
+                                            
+                                            'tipo'=>$row[0],
+                                            'data'=>date('Y-m-d', strtotime($row[1] )),
+                                            'valor'=>doubleval( $row[2]),
+                                            'id_loja'=>$loja->id,
+                                            'cartao'=>intval($row[4]),
+                                            'hora'=>$row[5],
+                                            
+                                          
+                                        ]);
+
+                                        if($transa){
+                                           $sucesso = true;
+                                        }else{
+                                            $sucesso = false;  
+                                        }
+                                        
+                                
+                                }
+                        }
+            
+            
+                    }
+
+                    
+                   	
+                }
+
+                if($sucesso){
+                    return redirect()->back()->with('status', '1');
+                }else{
+                    return redirect()->back()->with('aviso', '1');  
+                }
+
             }else{
                 return redirect()->back()->with('aviso', '2');  
             }
-      /*      
+           
         } catch (\Exception $exception) {
             return redirect()->back()->with('aviso', '1');
-        } */
+        } 
     }
     public function editar($id)
     {
-        if ($user = User::where([['it_estado_user', 1]])->find($id)) :
+        if ($dados["transacao"] = Transacao::find($id)) :
+            $dados["lojas"] = Loja::get();
 
-            return view('admin.users.editar.index', compact('user'));
+            $dados["transacao"] = DB::table('transacaos')
+            ->join('lojas', 'transacaos.id_loja', '=', 'lojas.id')
+            ->select(
+                'transacaos.*',
+                'lojas.nome_loja as nome_loja',
+                'lojas.bi_dono as bi',
+                'lojas.nome_dono as nome_dono',
+            )->orderBy('transacaos.id')->where([["transacaos.id",$id]])->first();
+
+            $dados["lojaSelecionada"] = Loja::find($dados["transacao"]->id_loja);
+            return view('admin.transacoes.editar.index', $dados);
         else :
-            return redirect('admin/users/cadastrar')->with('teste', '1');
+            return redirect('admin/transacoes/cadastrar')->with('teste', '1');
 
         endif;
     }
@@ -104,22 +314,21 @@ class TransacaoController extends Controller
     public function atualizar(Request $input, $id)
     {
         $dados = $input;
-        $dados->validate([
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+      
         // $this->user->update($dados, $id);
-        User::find($id)->update([
-            "vc_nomeUtilizador" => $dados->vc_nomeUtilizador,
-            "vc_tipoUtilizador" => $dados->vc_tipoUtilizador,
-            "vc_telefone" => $dados->vc_telefone,
-            "vc_genero" => $dados->vc_genero,
-            "vc_email" => $dados->vc_email,
-            "password" => bcrypt($dados->password),
+        Transacao::find($id)->update([
+            "tipo" => $dados->tipo,
+            "data" => $dados->data,
+            "valor" => $dados->valor,
+            "id_loja" => $dados->id_loja,
+            "cartao" => $dados->cartao,
+            "hora" => $dados->hora,
         ]);
-        // dd($input, $dados);
-        $this->loggerData("Actualizou Utilizador");
+
+       
+        $this->loggerData("Actualizou Transacao");
         if(Auth::user()->vc_tipoUtilizador == 'Administrador') {
-            return redirect('admin/users/listar')->with('status', '1');
+            return redirect('admin/transacoes/listar')->with('status', '1');
         }
         return redirect('/')->with('status', '1');
     }
@@ -127,14 +336,10 @@ class TransacaoController extends Controller
     public function excluir($id)
     {
         //User::find($id)->delete();
-        $response = User::find($id);
-        $response->update(['it_estado_user' => 0]);
-        $this->loggerData("Eliminou Utilizador");
+        $response = Transacao::find($id);
+        $response->delete();
+        $this->loggerData("Eliminou Transacao");
         return redirect()->back();
     }
-    public function editar_nivel($id, $nivel)
-    {
-        $user =  User::find($id)->update(['vc_tipoUtilizador' => $nivel]);
-        return response()->json($user);
-    }
+    
 }

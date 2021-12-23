@@ -84,7 +84,7 @@
                         <td>{{ $transacao->bi }}</td>
                         <td>{{ $transacao->cartao }}</td>
                         <td>{{ $transacao->hora }}</td>
-                        <td>{{ $transacao->dono_loja }}</td>
+                        <td>{{ $transacao->nome_dono }}</td>
                         <td>{{ $transacao->nome_loja }}</td>
 
 

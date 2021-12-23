@@ -19,11 +19,10 @@ class CreateTransacaosTable extends Migration
             $table->integer("tipo");
             $table->date("data");
             $table->double("valor");
-            $table->string("bi");
-            $table->integer("cartao");
+            $table->foreignId('id_loja')->constrained('lojas')->onDelete("cascade")->onUpdate("cascade");
+            $table->bigInteger("cartao");
             $table->time("hora");
-            $table->string("dono_loja");
-            $table->string("nome_loja");
+       
 
             $table->integer('it_estado')->default(1);
             $table->timestamps();

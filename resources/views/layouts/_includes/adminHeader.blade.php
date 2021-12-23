@@ -163,34 +163,46 @@
                                             @endif
     
                                         </ul>
+
+
+                                    <li class="nav-header">Lojas</li>
+                                    <li class="nav-item has-treeview ">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fa fa-funnel-dollar"></i>
+                                            <p>
+                                                Lojas
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            @if (Auth::user()->vc_tipoUtilizador == 'Administrador')
+                                                <li class="nav-item">
+                                                    <a href="{{ url('admin/lojas/cadastrar') }}" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>Cadastrar Lojas</p>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            @if (Auth::user()->vc_tipoUtilizador == 'Administrador')
+                                                <li class="nav-item">
+                                                    <a href="{{ url('admin/lojas/listar') }}" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>Lista de Lojas</p>
+                                                    </a>
+                                                </li>
+                                            
+                                            @endif
+    
+                                        </ul>
+                          
+
+
                           
 
 
                      
                        
-                            @if (Auth::user()->vc_tipoUtilizador == 'Administrador')
-
-                                <li class="nav-header">Registros de Actidades</li>
-                                <li class="nav-item has-treeview ">
-                                    <a href="#" class="nav-link ">
-                                        <i class="nav-icon fas fa-tasks"></i>
-                                        <p>
-                                            Registros
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{ url('admin/logs/pesquisar') }}" class="nav-link ">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Registros de Actividades</p>
-                                            </a>
-                                        </li>
-
-
-                                    </ul>
-                                </li>
-                            @endif
+                        
 
 
     

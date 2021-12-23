@@ -13,6 +13,7 @@ class Loja extends Model
         'nome_loja',
         'bi_dono',
         'nome_dono',
+        'saldo',
       
     ];
 }

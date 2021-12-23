@@ -59,7 +59,7 @@
     @elseif (session('aviso')==2)
     <script>
         Swal.fire(
-            'É permitido apenas arquivos no formato .xlsx! com os cabeçalhos descritos na documentação',
+            'É permitido apenas arquivos nos formatos (xlsx,csv e txt)! com os cabeçalhos descritos na documentação no caso específico e único do formato xlsx!',
             
             'error'
         )

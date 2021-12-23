@@ -40,7 +40,6 @@ Route::middleware('access.controll.administrador')->group(function () {
 
     //=============transacao-Start=====================//
     Route::get('admin/transacoes/listar', ['as' => 'admin.transacoes', 'uses' => 'Admin\TransacaoController@index'])->middleware('access.controll.administrador');
-    Route::get('admin/transacoes/listar/imprimir', ['as' => 'admin.transacoes.listar.imprimir', 'uses' => 'Admin\TransacaoController@imprimir_lista'])->middleware('access.controll.administrador');
     Route::post('admin/transacoes/salvar', ['as' => 'admin.transacoes.salvar', 'uses' => 'Admin\TransacaoController@salvar'])->middleware('access.controll.administrador');
     Route::get('admin/transacoes/cadastrar', ['as' => 'admin.transacoes.cadastrar', 'uses' => 'Admin\TransacaoController@create'])->middleware('access.controll.administrador');
     Route::get('admin/transacoes/excluir/{id}', ['as' => 'admin.transacoes.excluir', 'uses' => 'Admin\TransacaoController@excluir'])->middleware('access.controll.administrador');

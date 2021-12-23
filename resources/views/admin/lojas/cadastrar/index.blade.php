@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('titulo', 'Cadastrar Transações')
+@section('titulo', 'Cadastrar Lojas')
 
  @section('conteudo')
     <div class="card mt-3">
         <div class="card-body">
-            <h2>Cadastrar Transações</h2>
+            <h2>Cadastrar Lojas</h2>
         </div>
     </div>
     <script src="/js/sweetalert2.all.min.js"></script>
@@ -21,10 +21,10 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ url('admin/transacoes/salvar')}}" method="post" class="row"  enctype="multipart/form-data">
+            <form action="{{ url('admin/lojas/salvar')}}" method="post" class="row"  enctype="multipart/form-data">
                 @csrf
 
-                @include('forms._formTransacao.index')
+                @include('forms._formLoja.index')
 
                 <div class=" col-md-12 text-center d-flex justify-content-center ">
                     <button type="submit" class=" col-md-2 text-center btn btn-dark"> Cadastrar</button>
@@ -39,7 +39,7 @@
     @if (session('status'))
         <script>
             Swal.fire(
-                'Transações Cadastradas',
+                'Loja Cadastrada',
                 '',
                 'success'
             )
@@ -49,22 +49,14 @@
     @if (session('aviso')==1)
         <script>
             Swal.fire(
-                'Falha ao cadastrar Transações!',
+                'Falha ao cadastrar a Loja!',
                 
                 'error'
             )
 
         </script>
 
-    @elseif (session('aviso')==2)
-    <script>
-        Swal.fire(
-            'É permitido apenas arquivos no formato .xlsx! com os cabeçalhos descritos na documentação',
-            
-            'error'
-        )
-
-    </script>
+   
 
     @endif
    

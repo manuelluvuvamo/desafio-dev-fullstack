@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('titulo', 'Lista de Transações')
+@section('titulo', 'Lista de Lojas')
 
 @section('conteudo')
     <div class="card mt-3">
         <div class="card-body">
-            <h3>Lista de Transações</h3>
+            <h3>Lista de Lojas</h3>
         </div>
     </div>
 
@@ -26,66 +26,25 @@
         <thead class="thead-dark">
             <tr class="text-center">
                 <th>ID</th>
-                <th>TIPO</th>
-                <th>DATA</th>
-                <th>VALOR</th>
-                <th>BI</th>
-                <th>CARTÃO</th>
-                <th>HORA</th>
+                <th>BI REPRESENTANTE</th>
                 <th>DONO DA LOJA</th>
                 <th>NOME DA LOJA</th>
+                <th>SALDO</th>
                 <th>ACÇÕES</th>
             </tr>
         </thead>
         <tbody class="bg-white">
-            @if ($transacoes)
+            @if ($lojas)
 
 
-                @foreach ($transacoes as $transacao)
+                @foreach ($lojas as $loja)
                     <tr class="text-center">
-                        <th>{{ $transacao->id }}</th>
-                        <th>@switch($transacao->tipo)
-                            @case(1)
-                                Débito
-                                @break
-                            @case(2)
-                                Boleto
-                                @break
-                             @case(3)
-                                Financiamento
-                                @break
-
-                             @case(4)
-                                Crédito
-                                @break
-                            @case(5)
-                                Recebimento empréstimo
-                                @break
-                            @case(6)
-                                Vendas
-                                @break
-                            @case(7)
-                            Recebimento TED
-                                @break
-                             @case(8)
-                             Recebimento DOC
-                                @break
-                            @case(9)
-                            Aluguel
-                                @break
-                                
-                            @default
-                                
-                        @endswitch</th>
-
-                        <th>{{ $transacao->data }}</th>
-                        <td>{{ $transacao->valor }}</td>
-
-                        <td>{{ $transacao->bi }}</td>
-                        <td>{{ $transacao->cartao }}</td>
-                        <td>{{ $transacao->hora }}</td>
-                        <td>{{ $transacao->dono_loja }}</td>
-                        <td>{{ $transacao->nome_loja }}</td>
+                        <th>{{ $loja->id }}</th>
+                        <td>{{ $loja->bi_dono }}</td>
+                        <td>{{ $loja->nome_dono }}</td>
+                        <td>{{ $loja->nome_loja }}</td>
+                        <td>{{ $loja->saldo }}</td>
+                       
 
 
 
@@ -98,9 +57,9 @@
                                     <i class="fa fa-clone fa-sm" aria-hidden="true"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a href="{{ route('admin.transacoes.editar', $transacao->id) }}"
+                                    <a href="{{ route('admin.lojas.editar', $loja->id) }}"
                                         class="dropdown-item">Editar</a>
-                                    <a href="{{ route('admin.transacoes.excluir', $transacao->id) }}" class="dropdown-item"
+                                    <a href="{{ route('admin.lojas.excluir', $loja->id) }}" class="dropdown-item"
                                         data-confirm="Tem certeza que deseja eliminar?">Eliminar</a>
                                 </div>
                             </div>

@@ -19,7 +19,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
     {
 
 
-        $loja = Loja::where([["bi_dono",$row["bi"]]])->get()->first();
+        $loja = Loja::where([["bi_dono",$row["bi"]]])->where([["nome_loja",$row["nome_loja"]]])->get()->first();
 
      
         if(isset($loja->id)){
@@ -69,7 +69,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
                 
                 $loj = Loja::find($loja->id)->update([
 
-                    "value"=>  $saldo,
+                    "saldo"=>  $saldo,
 
 
                 ]);
@@ -80,13 +80,12 @@ class TransacaoImport implements ToModel,WithHeadingRow
                         //
                         
                         'tipo'=>$row["tipo"],
-                        'data'=>$row["data"],
-                        'valor'=>floatval($row["valor"]),
-                        'bi'=>$row["bi"],
+                        'data'=>date('Y-m-d', strtotime($row["data"] )),
+                        'valor'=>doubleval($row["valor"]),
+                        'id_loja'=>$loja->id,
                         'cartao'=>intval($row["cartao"]),
                         'hora'=>$row["hora"],
-                        'dono_loja'=>$row["dono_loja"],
-                        'nome_loja'=>$row["nome_loja"],
+                        
                     ]);
                 }
 
@@ -147,7 +146,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
                 }
                     $loj = Loja::find($loja->id)->update([
     
-                        "value" =>$saldo,
+                        "saldo" =>$saldo,
     
     
                     ]);
@@ -159,12 +158,11 @@ class TransacaoImport implements ToModel,WithHeadingRow
                             
                             'tipo'=>$row["tipo"],
                             'data'=>$row["data"],
-                            'valor'=>floatval($row["valor"]),
-                            'bi'=>$row["bi"],
+                            'valor'=>doubleval($row["valor"]),
+                            'id_loja'=>$loja->id,
                             'cartao'=>intval($row["cartao"]),
                             'hora'=>$row["hora"],
-                            'dono_loja'=>$row["dono_loja"],
-                            'nome_loja'=>$row["nome_loja"],
+                            
                         ]);
                     }
             }

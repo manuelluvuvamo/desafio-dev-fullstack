@@ -37,9 +37,9 @@ class LojaController extends Controller
     {
      
 
-        $dados['lojas'] = Loja::where([['it_estado', 1]])->get();
+        $dados['lojas'] = Loja::get();
 
-        return view('admin.loja.index', $dados);
+        return view('admin.lojas.index', $dados);
     }
 
     /**
@@ -51,36 +51,25 @@ class LojaController extends Controller
     {
         //
 
-        $dados['areas'] =  Area::where([['it_estado', 1]])->get();
-        $dados['departamentos'] =  Departamento::where([['it_estado', 1]])->get();
-        $dados['anoslectivos'] =  AnoLectivo::where([['it_estado_anoLectivo', 1]])->get();
-        return view('admin.loja.cadastrar.index', $dados);
+       
+        return view('admin.lojas.cadastrar.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function salvar (Request $request)
     {
-        //
-        // dd($request);
+        
         try {
 
-            Loja::create([
+            $loja = Loja::create([
 
-
-
-                'vc_descricao' => $request->vc_descricao,
-                'it_estado' => 1,
-                'it_id_area' => $request->it_id_area,
-                'it_id_departamento'  => $request->it_id_departamento,
-                'it_id_ano_lectivo' => $request->it_id_ano_lectivo,
+                'nome_loja' => $request->nome_loja,
+                'nome_dono' =>  $request->nome_dono,
+                'bi_dono' =>$request->bi_dono,
+                'saldo'=>$request->saldo,
+                
             ]);
-            $this->loggerData("Adicionou loja " . $request->vc_descricao);
-            return redirect('/admin/loja')->with('status', '1');
+            $this->loggerData("Adicionou loja " . $request->nome_loja);
+            return redirect()->back()->with('status', '1');
         } catch (\Exception $exception) {
             return redirect()->back()->with('aviso', '1');
         }
@@ -92,72 +81,42 @@ class LojaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-        //$loja = Loja::where([['it_estado_anoLectivo', 1]])->get();
-        $dados['loja'] = $this->lojas->lojas()->where('it_estado', 1)->where('id', $id)->first();
+    
 
-        return view('admin.loja.visualizar.index', $dados);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function editar($id)
     {
 
-        if ($dados['loja'] = $this->lojas->lojas()->where('it_estado', 1)->where('id', $id)->first()) :
-            // dd($dados);
-            $dados['areas'] =  Area::where([['it_estado', 1]])->get();
-            $dados['departamentos'] =  Departamento::where([['it_estado', 1]])->get();
-            $dados['anoslectivos'] =  AnoLectivo::where([['it_estado_anoLectivo', 1]])->get();
-
-
-            return view('admin.loja.editar.index', $dados);
+        if ($dados['loja'] = Loja::find($id)->first()) :
+           
+            return view('admin.lojas.editar.index', $dados);
         else :
             return redirect('/admin/loja/cadastrar')->with('loja', '1');
 
         endif;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function atualizar (Request $request, $id)
     {
         //
         Loja::find($id)->update([
-            'vc_descricao' => $request->vc_descricao,
-            'it_estado' => 1,
-            'it_id_area' => $request->it_id_area,
-            'it_id_departamento'  => $request->it_id_departamento,
-            'it_id_ano_lectivo' => $request->it_id_ano_lectivo,
+            'nome_loja' => $request->nome_loja,
+            'nome_dono' =>  $request->nome_dono,
+            'bi_dono' =>$request->bi_dono,
+            'saldo'=>$request->saldo,
         ]);
-        $this->loggerData("Actualizou loja " . $request->vc_descricao);
-        return redirect()->route('admin/loja');
+        $this->loggerData("Actualizou loja " . $request->nome_loja);
+        return redirect('admin/lojas/listar')->with('status', '1');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+   
+    public function excluir ($id)
     {
         //
         // Loja::find($id)->delete();
         $response = Loja::find($id);
-        $response->update(['it_estado' => 0]);
-        $this->loggerData("Eliminou loja " . $response->vc_loja);
+        Loja::find($id)->delete();
+      
+        $this->loggerData("Eliminou loja " . $response->nome_loja);
         return redirect()->route('admin/loja');
     }
 }

@@ -14,46 +14,6 @@ use App\Http\Controllers\admin\controllerTurma;
 |
 */
 
-// ['as' => 'admin.listar', 'uses' => 'Admin\CandidaturaController@index']
 
 
-// Route::get('/', function () {
-//     return view('login');
-// });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-
-    return view('dashboard');
-})->name('dashboard');
-
-
-//site inicial inicio
-Route::get('site', ['as' => 'site.site', 'uses' => 'SiteController@index']);
-//site inicial fim
-//formulário de candidatura inicio
-Route::get('candidatura/get', ['as' => 'site.candidatura.get', 'uses' => 'Admin\CandidaturaController@create']);
-Route::post('candidatura/', ['as' => 'site.candidatura', 'uses' => 'Admin\CandidaturaController@store']);
-Route::get('/admitido', ['as' => 'admitido', 'uses' => 'Admin\ConfirmacaoController@confirmar']);
-Route::post('/admitido/store', ['as' => 'admin.admitidoPost', 'uses' => 'Admin\ConfirmacaoController@confirmarStore']);
-
-//formulário de candidatura fim
-// Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('confirmados/{filename}', function ($filename)
-{
-    $path = public_path('confirmados/'.$filename);
-    //dd($path);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});

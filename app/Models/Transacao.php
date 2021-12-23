@@ -15,11 +15,10 @@ class Transacao extends Model
         'tipo',
         'data',
         'valor',
-        'bi',
+        'id_loja',
         'cartao',
         'hora',
-        'dono_loja',
-        'nome_loja',
+        
     ];
 
 
