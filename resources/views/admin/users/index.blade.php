@@ -100,7 +100,7 @@
     </script>
     <!-- Footer-->
 
-    @include('admin.layouts.footer')
+   
     <script src="/js/datatables/jquery-3.5.1.js"></script>
     <script>
        

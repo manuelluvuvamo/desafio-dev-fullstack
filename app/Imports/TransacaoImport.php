@@ -17,11 +17,12 @@ class TransacaoImport implements ToModel,WithHeadingRow
     {
         return new Transacao([
             //
+            
             'tipo'=>$row["tipo"],
             'data'=>$row["data"],
-            'valor'=>$row["valor"],
+            'valor'=>doubleval($row["valor"]),
             'bi'=>$row["bi"],
-            'cartao'=>$row["cartao"],
+            'cartao'=>intval($row["cartao"]),
             'hora'=>$row["hora"],
             'dono_loja'=>$row["dono_loja"],
             'nome_loja'=>$row["nome_loja"],

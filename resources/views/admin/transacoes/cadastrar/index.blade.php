@@ -46,7 +46,7 @@
 
         </script>
     @endif
-    @if (session('aviso'))
+    @if (session('aviso')==1)
         <script>
             Swal.fire(
                 'Falha ao cadastrar Transações!',
@@ -55,6 +55,17 @@
             )
 
         </script>
+
+    @elseif (session('aviso')==2)
+    <script>
+        Swal.fire(
+            'É permitido apenas arquivos no formato .xlsx! com os cabeçalhos descritos na documentação',
+            
+            'error'
+        )
+
+    </script>
+
     @endif
    
 

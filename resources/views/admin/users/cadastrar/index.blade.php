@@ -62,7 +62,7 @@
 
         </script>
     @endif
-    <!-- Footer-->
-    @include('admin.layouts.footer')
+  
+    
 
 @endsection

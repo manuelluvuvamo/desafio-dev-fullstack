@@ -39,7 +39,7 @@ class TransacaoController extends Controller
     {
         $this->loggerData("Listou as transações");
 
-        $transacoes = User::where([['it_estado_user', 1]])->get();
+        $transacoes = Transacao::where([['it_estado', 1]])->get();
         return view('admin.transacoes.index', compact('transacoes'));
     }
     public function imprimir_lista()
@@ -68,16 +68,23 @@ class TransacaoController extends Controller
     {
         try {
             
+            $extension = strtolower( $request->file->getClientOriginalExtension());
 
-            $importado = Excel::import(new TransacaoImport, $request->file);
+            if($extension == "xlsx"){
+
+                $importado = Excel::import(new TransacaoImport, $request->file);
             
          
             
-            if($importado){
-                return redirect()->back()->with('status', '1');
+                if($importado){
+                    return redirect()->back()->with('status', '1');
+                }else{
+                    return redirect()->back()->with('aviso', '1');  
+                }
             }else{
-                return redirect()->back()->with('aviso', '1');  
+                return redirect()->back()->with('aviso', '2');  
             }
+           
         } catch (\Exception $exception) {
             return redirect()->back()->with('aviso', '1');
         }
