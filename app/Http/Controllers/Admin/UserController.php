@@ -41,21 +41,7 @@ class UserController extends Controller
         $users = User::where([['it_estado_user', 1]])->get();
         return view('admin.users.index', compact('users'));
     }
-    public function imprimir_lista()
-    {
-        $data['cabecalho'] = Cabecalho::find(1);
-        $data["bootstrap"] = file_get_contents("css/listas/bootstrap.min.css");
-        $data["css"] = file_get_contents("css/listas/style.css");
-
-        $mpdf = new \Mpdf\Mpdf();
-
-        $mpdf->SetFont("arial");
-        $mpdf->setHeader();
-        $this->loggerData("Imprimiu Lita de Utilizador");
-        $html = view("admin/pdfs/listas/funcionario/index", $data);
-        $mpdf->writeHTML($html);
-        $mpdf->Output("listasdFuncionarios.pdf", "I");
-    }
+   
 
 
     public function create()

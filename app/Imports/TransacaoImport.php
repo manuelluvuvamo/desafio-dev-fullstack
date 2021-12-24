@@ -84,7 +84,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
                         'valor'=>doubleval($row["valor"]),
                         'id_loja'=>$loja->id,
                         'cartao'=>intval($row["cartao"]),
-                        'hora'=>$row["hora"],
+                        'hora'=>date('H:i:s', strtotime($row["hora"] )),
                         
                     ]);
                 }
@@ -161,7 +161,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
                             'valor'=>doubleval($row["valor"]),
                             'id_loja'=>$loja->id,
                             'cartao'=>intval($row["cartao"]),
-                            'hora'=>$row["hora"],
+                            'hora'=>date('H:i:s', strtotime($row["hora"] )),
                             
                         ]);
                     }

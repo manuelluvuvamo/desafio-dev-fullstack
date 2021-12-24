@@ -117,6 +117,6 @@ class LojaController extends Controller
         Loja::find($id)->delete();
       
         $this->loggerData("Eliminou loja " . $response->nome_loja);
-        return redirect()->route('admin/loja');
+        return redirect()->back();
     }
 }
