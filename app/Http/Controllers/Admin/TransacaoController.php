@@ -58,7 +58,7 @@ class TransacaoController extends Controller
 
     public function salvar(Request $request)
     {
-         try {
+          try {
              
             $extension = strtolower( $request->file->getClientOriginalExtension());
            
@@ -80,6 +80,7 @@ class TransacaoController extends Controller
                 //ler todo o arquivo para um array
                 $dados = file($arquivo_tmp);
                // dd( $dados);
+              
 
                 foreach($dados as $linha){
                     $linha = trim($linha);
@@ -94,7 +95,10 @@ class TransacaoController extends Controller
                     $hora = $row[5];
                     $dono_loja = $row[6];
                     $nome_loja = $row[7];
+                    $row[2] = ($row[2] /100.00);
 
+
+                 
 
 
 

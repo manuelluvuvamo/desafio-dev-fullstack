@@ -21,6 +21,7 @@ class TransacaoImport implements ToModel,WithHeadingRow
 
         $loja = Loja::where([["bi_dono",$row["bi"]]])->where([["nome_loja",$row["nome_loja"]]])->get()->first();
 
+        $row["valor"] = ($row["valor"] /100.00);
      
         if(isset($loja->id)){
             //dd($loja->id);
