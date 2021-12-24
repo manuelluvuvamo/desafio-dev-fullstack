@@ -25,6 +25,9 @@ Após fazer o clone do projecto segiur os seguintes comandos:
 7. Executar no terminal ainda o comando:  php artisan migrate --seed
 8. Após o término do comando anterior executar o comando para inicializar o servidor: php artisan serve
 9. Após o comando anterior abrir no navegador o endereço de inicialização mostrado que por padrão é: http://localhost:8000  ****(http://127.0.0.1:8000/)
+10. Inicair sessão utilizando as credenciasi:
+    Email: geral@kaila.co.ao
+    Senha: 12345678
 
 # Utilização do sistema
 
