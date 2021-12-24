@@ -74,7 +74,7 @@ Após fazer o clone do projecto segiur os seguintes comandos:
     5. Clicar em Confirmar alterações
     
 
-# Documentação do CNAB.xlsx
+# Documentação do CNAB - copia.xlsx
     
    **Deve conter os cabeçalhos na primeira fila como exemplificado à seguir**
 
